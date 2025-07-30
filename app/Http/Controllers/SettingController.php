@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -51,6 +52,33 @@ class SettingController extends Controller
         ]);
 
         return response()->json(['message' => 'Utente registrato con successo'], 201);
+    }
+
+    public function login(Request $request)
+    {
+        // Validate request
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // Attempt login with "remember me"
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::guard('web')->attempt($credentials, true)) {
+            // $request->session()->regenerate();   // Prevent session fixation
+
+            return response()->json([
+                'message' => 'Login successful.',
+                'user_id' => Auth::id(),
+            ]);
+        }
+
+        return response()->json(['errors' => ['email' => ['Invalid credentials.']]], 401);
     }
 
     /**

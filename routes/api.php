@@ -7,6 +7,7 @@ use App\Http\Controllers\SettingController;
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/register', [SettingController::class, 'registerApp']);
+    Route::post('/login', [SettingController::class, 'login']);
 
 });
 
