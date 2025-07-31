@@ -1,4 +1,9 @@
 <x-app-layout>
+@php
+$users = App\Models\User::whereHas('setting', function ($query) {
+    $query->where('role', 'user');
+})->with('setting')->paginate(20);
+@endphp
 <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <div class="container-fluid py-2 px-5">
       <div class="row">
@@ -48,14 +53,16 @@
                 <table class="table align-items-center mb-0">
                   <thead class="bg-gray-100">
                     <tr>
-                      <th class="text-secondary text-xs font-weight-semibold opacity-7">Member</th>
-                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Function</th>
-                      <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Status</th>
-                      <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Employed</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7">Utenti</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Professione</th>
+                      <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Livello di istruzione</th>
+                      <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Città</th>
+                      <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Registrazione</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach ($users as $user)
                     <tr>
                       <td>
                         <div class="d-flex px-2 py-1">
@@ -63,20 +70,22 @@
                             <img src="../assets/img/team-2.jpg" class="avatar avatar-sm rounded-circle me-2" alt="user1">
                           </div>
                           <div class="d-flex flex-column justify-content-center ms-1">
-                            <h6 class="mb-0 text-sm font-weight-semibold">John Michael</h6>
-                            <p class="text-sm text-secondary mb-0">john@creative-tim.com</p>
+                            <h6 class="mb-0 text-sm font-weight-semibold">{{ ($user->setting->first_name ?? '') . ' ' . ($user->setting->last_name ?? '') ?: 'N/A' }}</h6>
+                            <p class="text-sm text-secondary mb-0">{{ $user->email ?? 'N/A' }}</p>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <p class="text-sm text-dark font-weight-semibold mb-0">Manager</p>
-                        <p class="text-sm text-secondary mb-0">Organization</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm border border-success text-success bg-success">Online</span>
+                        <p class="text-sm text-secondary mb-0">{{ $user->setting->profession ?? 'N/A'}}</p>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-sm font-weight-normal">23/04/18</span>
+                        <span class="text-secondary text-sm font-weight-normal">{{ $user->setting->education_level ?? 'N/A'}}</span>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <span class="badge badge-sm border border-success text-success bg-success">{{ $user->setting->city ?? 'N/A'}}</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-sm font-weight-normal">{{ $user->created_at ? $user->created_at->format('d/m/Y') : 'N/A' }}</span>
                       </td>
                       <td class="align-middle">
                         <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-bs-toggle="tooltip" data-bs-title="Edit user">
@@ -86,15 +95,22 @@
                         </a>
                       </td>
                     </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>
               <div class="border-top py-3 px-3 d-flex align-items-center">
-                <p class="font-weight-semibold mb-0 text-dark text-sm">Page 1 of 10</p>
-                <div class="ms-auto">
-                  <button class="btn btn-sm btn-white mb-0">Previous</button>
-                  <button class="btn btn-sm btn-white mb-0">Next</button>
-                </div>
+                  <p class="font-weight-semibold mb-0 text-dark text-sm">
+                      Pagina {{ $users->currentPage() }} of {{ $users->lastPage() }}
+                  </p>
+                  <div class="ms-auto">
+                      <a href="{{ $users->previousPageUrl() }}" class="btn btn-sm btn-white mb-0 {{ $users->onFirstPage() ? 'disabled' : '' }}">
+                          Precedente
+                      </a>
+                      <a href="{{ $users->nextPageUrl() }}" class="btn btn-sm btn-white mb-0 {{ !$users->hasMorePages() ? 'disabled' : '' }}">
+                          Successiva
+                      </a>
+                  </div>
               </div>
             </div>
           </div>
