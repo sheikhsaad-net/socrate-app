@@ -110,7 +110,7 @@
                       <td>
                         <div class="d-flex px-2">
                           <div class="avatar avatar-sm rounded-circle bg-gray-100 me-2 my-2">
-                            <img src="../assets/img/small-logos/logo-spotify.svg" class="w-80" alt="spotify">
+                            <img src="{{ url('/assets/img/small-logos/logo-spotify.svg') }}" class="w-80" alt="spotify">
                           </div>
                           <div class="my-auto">
                             <h6 class="mb-0 text-sm">Spotify</h6>
@@ -126,7 +126,7 @@
                       <td class="align-middle">
                         <div class="d-flex">
                           <div class="border px-1 py-1 text-center d-flex align-items-center border-radius-sm my-auto">
-                            <img src="../assets/img/logos/visa.png" class="w-90 mx-auto" alt="visa">
+                            <img src="{{ url('/assets/img/logos/visa.png') }}" class="w-90 mx-auto" alt="visa">
                           </div>
                           <div class="ms-2">
                             <p class="text-dark text-sm mb-0">Visa 1234</p>
@@ -146,7 +146,7 @@
                       <td>
                         <div class="d-flex px-2">
                           <div class="avatar avatar-sm rounded-circle bg-gray-100 me-2 my-2">
-                            <img src="../assets/img/small-logos/logo-invision.svg" class="w-80" alt="invision">
+                            <img src="{{ url('/assets/img/small-logos/logo-invision.svg') }}" class="w-80" alt="invision">
                           </div>
                           <div class="my-auto">
                             <h6 class="mb-0 text-sm">Invision</h6>
@@ -162,7 +162,7 @@
                       <td class="align-middle">
                         <div class="d-flex">
                           <div class="border px-1 py-1 text-center d-flex align-items-center border-radius-sm my-auto">
-                            <img src="../assets/img/logos/mastercard.png" class="w-90 mx-auto" alt="mastercard">
+                            <img src="{{ url('/assets/img/logos/mastercard.png') }}" class="w-90 mx-auto" alt="mastercard">
                           </div>
                           <div class="ms-2">
                             <p class="text-dark text-sm mb-0">Mastercard 1234</p>
@@ -182,7 +182,7 @@
                       <td>
                         <div class="d-flex px-2">
                           <div class="avatar avatar-sm rounded-circle bg-gray-100 me-2 my-2">
-                            <img src="../assets/img/small-logos/logo-jira.svg" class="w-80" alt="jira">
+                            <img src="{{ url('/assets/img/small-logos/logo-jira.svg') }}" class="w-80" alt="jira">
                           </div>
                           <div class="my-auto">
                             <h6 class="mb-0 text-sm">Jira</h6>
@@ -198,7 +198,7 @@
                       <td class="align-middle">
                         <div class="d-flex">
                           <div class="border px-1 py-1 text-center d-flex align-items-center border-radius-sm my-auto">
-                            <img src="../assets/img/logos/mastercard.png" class="w-90 mx-auto" alt="mastercard">
+                            <img src="{{ url('/assets/img/logos/mastercard.png') }}" class="w-90 mx-auto" alt="mastercard">
                           </div>
                           <div class="ms-2">
                             <p class="text-dark text-sm mb-0">Mastercard 1234</p>
@@ -218,7 +218,7 @@
                       <td>
                         <div class="d-flex px-2">
                           <div class="avatar avatar-sm rounded-circle bg-gray-100 me-2 my-2">
-                            <img src="../assets/img/small-logos/logo-slack.svg" class="w-80" alt="slack">
+                            <img src="{{ url('/assets/img/small-logos/logo-slack.svg') }}" class="w-80" alt="slack">
                           </div>
                           <div class="my-auto">
                             <h6 class="mb-0 text-sm">Slack</h6>
@@ -234,7 +234,7 @@
                       <td class="align-middle">
                         <div class="d-flex">
                           <div class="border px-1 py-1 text-center d-flex align-items-center border-radius-sm my-auto">
-                            <img src="../assets/img/logos/visa.png" class="w-90 mx-auto" alt="visa">
+                            <img src="{{ url('/assets/img/logos/visa.png') }}" class="w-90 mx-auto" alt="visa">
                           </div>
                           <div class="ms-2">
                             <p class="text-dark text-sm mb-0">Visa 1234</p>
