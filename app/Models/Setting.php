@@ -17,4 +17,9 @@ class Setting extends Model
         'education_level',
         'city',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
