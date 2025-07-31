@@ -43,6 +43,7 @@
 
             <!-- Page Content -->
             <main>
+                <x-sidebar />
                 {{ $slot }}
             </main>
         </div>
