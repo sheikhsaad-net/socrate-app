@@ -5,9 +5,9 @@
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">{{ request()->path() }}</li>
           </ol>
-          <h6 class="font-weight-bold mb-0">{{ request()->path() }}</h6>
+          <h6 class="font-weight-bold mb-0" style="text-transform: capitalize;">{{ request()->path() }}</h6>
         </nav>
-        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar" style="display: none !important;">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
              
           
