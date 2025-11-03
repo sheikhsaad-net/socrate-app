@@ -16,12 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->unique();
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('gender');
             $table->integer('age');
-            $table->float('height_cm');
-            $table->float('weight_kg');
-            $table->string('profession');
-            $table->string('education_level');
-            $table->string('city');
+            $table->string('external_user_id')->unique(); // corresponds to userId
+            $table->string('image')->nullable();
             $table->string('role')->default('user');
             $table->timestamps();
         });

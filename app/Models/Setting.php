@@ -10,12 +10,11 @@ class Setting extends Model
         'user_id',
         'first_name',
         'last_name',
+        'gender',
         'age',
-        'height_cm',
-        'weight_kg',
-        'profession',
-        'education_level',
-        'city',
+        'external_user_id',
+        'image',
+        'role',
     ];
 
     public function user()

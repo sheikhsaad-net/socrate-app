@@ -1,12 +1,12 @@
 @php
-    $setting = App\Models\Setting::where('user_id', auth()->id())->first();
+    $setting = \App\Models\Setting::where('user_id', auth()->id())->first();
 @endphp
 <div class="container-fluid py-4 px-5">
       <div class="row">
         <div class="col-md-12">
           <div class="d-md-flex align-items-center mb-3 mx-2">
             <div class="mb-md-0 mb-3">
-              <h2 class="font-weight-bold mb-0 text-2xl">Ciao, {{$setting->first_name}}</h2>
+              Ciao, {{ $setting->first_name ?? 'Admin' }}
               <p class="mb-0">App che potrebbero piacerti!</p>
             </div>
             <button type="button" class="btn btn-sm btn-white btn-icon d-flex align-items-center mb-0 ms-md-auto mb-sm-0 mb-2 me-2" style="display: none !important;">
