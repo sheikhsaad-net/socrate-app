@@ -13,69 +13,85 @@ class SettingController extends Controller
 {
    
     public function registerApp(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email|unique:users,email',
-            'password' => 'required|string|min:6',
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'gender' => 'required|string|max:255',
-            'age' => 'required|integer|min:1|max:120',
-            'userId' => 'required|string|unique:settings,external_user_id',
-            'image' => 'nullable|string', // Base64 string
-        ]);
+{
+    $validator = Validator::make($request->all(), [
+        'email' => 'required|string|email|unique:users,email',
+        'password' => 'required|string|min:6',
+        'first_name' => 'required|string|max:255',
+        'last_name' => 'required|string|max:255',
+        'gender' => 'required|string|max:255',
+        'age' => 'required|integer|min:1|max:120',
+        'userId' => 'required|string|unique:settings,external_user_id',
+        'image' => 'nullable|string', // Base64 string
+    ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
 
-        // Create user
-        $user = User::create([
-            'name' => $request->first_name . ' ' . $request->last_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+    // Create user
+    $user = User::create([
+        'name' => $request->first_name . ' ' . $request->last_name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+    ]);
 
-        // Handle Base64 image conversion
-        $imagePath = null;
-        if ($request->image) {
-            $imageData = base64_decode($request->image);
-            $fileName = 'user_' . $user->id . '_' . time() . '.jpg';
-            $filePath = storage_path('app/public/user_images/' . $fileName);
+    // Handle Base64 image conversion
+$imagePath = null;
 
-            if (!file_exists(dirname($filePath))) {
-                mkdir(dirname($filePath), 0755, true);
-            }
+if (!empty($request->image)) {
+    // Remove base64 prefix if present
+    $base64Image = preg_replace('/^data:image\/\w+;base64,/', '', $request->image);
+    $base64Image = str_replace(' ', '+', $base64Image);
 
-            file_put_contents($filePath, $imageData);
-            $imagePath = 'user_images/' . $fileName;
-        }
+    $imageData = base64_decode($base64Image);
+    if ($imageData === false) {
+        return response()->json(['error' => 'Invalid image data'], 400);
+    }
 
-        // Create related setting
-        Setting::create([
-            'user_id' => $user->id,
+    // Ensure directory exists in storage
+    $directory = storage_path('app/public/user_images');
+    if (!is_dir($directory)) {
+        mkdir($directory, 0755, true);
+    }
+
+    // Save image
+    $fileName = 'user_' . $user->id . '_' . time() . '.jpg';
+    $filePath = $directory . '/' . $fileName;
+    file_put_contents($filePath, $imageData);
+
+    // Path relative to public/storage
+    $imagePath = 'user_images/' . $fileName;
+}
+
+
+    // Create related setting
+    Setting::create([
+        'user_id' => $user->id,
+        'first_name' => $request->first_name,
+        'last_name' => $request->last_name,
+        'gender' => $request->gender,
+        'age' => $request->age,
+        'external_user_id' => $request->userId,
+        'image' => $imagePath,
+    ]);
+
+    // Response
+    return response()->json([
+        'message' => 'User registered successfully.',
+        'user' => [
+            'id' => $user->id,
+            'email' => $user->email,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'gender' => $request->gender,
             'age' => $request->age,
-            'external_user_id' => $request->userId,
-            'image' => $imagePath,
-        ]);
+            'userId' => $request->userId,
+            'image' => $imagePath ? asset('storage/' . $imagePath) : null,
+        ]
+    ], 201);
+}
 
-        return response()->json([
-            'message' => 'User registered successfully.',
-            'user' => [
-                'id' => $user->id,
-                'email' => $user->email,
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'gender' => $request->gender,
-                'age' => $request->age,
-                'userId' => $request->userId,
-                'image' => $imagePath ? asset('storage/' . $imagePath) : null,
-            ]
-        ], 201);
-    }
 
     public function login(Request $request)
     {
