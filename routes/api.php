@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\QaUserAnswerController;
 
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -10,6 +11,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/login', [SettingController::class, 'loginApp']);
     Route::post('/logout', [SettingController::class, 'logoutApp']);
     Route::post('/user', [SettingController::class, 'userApp']);
+    Route::post('/qa/store', [QaUserAnswerController::class, 'store']);
 
 });
 
