@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\QaUserAnswer;
 use App\Models\SurveyAnswer;
+use App\Models\SurveyQuestion;
 use Illuminate\Http\Request;
-
 
 class QaUserAnswerController extends Controller
 {
@@ -81,6 +81,13 @@ class QaUserAnswerController extends Controller
             'status'    => 'updated',
             'entry_id'  => $row->id,
         ], 200);
+    }
+
+    public function getQuestionSurway()
+    {
+        $rows = SurveyQuestion::all('id', 'title');
+
+        return response()->json($rows, 200);
     }
 
     public function storeQuestionSurway(Request $req)
