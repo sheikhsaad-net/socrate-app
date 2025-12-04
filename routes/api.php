@@ -11,7 +11,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/login', [SettingController::class, 'loginApp']);
     Route::post('/logout', [SettingController::class, 'logoutApp']);
     Route::post('/user', [SettingController::class, 'userApp']);
-    Route::post('/qa/store', [QaUserAnswerController::class, 'store']);
+    Route::post('/question', [QaUserAnswerController::class, 'store']);
+    Route::put('/question/{id}', [QaUserAnswerController::class, 'update']);
+    Route::get('/survey/question', [QaUserAnswerController::class, 'getQuestionSurway']);
+    Route::post('/survey/question', [QaUserAnswerController::class, 'storeQuestionSurway']);
+    Route::post('/survey/answer', [QaUserAnswerController::class, 'storeAnswerSurway']);
 
 });
 
