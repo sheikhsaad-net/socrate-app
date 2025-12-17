@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\QaUserAnswer;
 use App\Models\SurveyAnswer;
 use App\Models\SurveyQuestion;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class QaUserAnswerController extends Controller
@@ -44,22 +45,6 @@ class QaUserAnswerController extends Controller
             'status'    => 'stored',
             'entry_id'  => $row->id,
         ], 200);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(QaUserAnswer $qaUserAnswer)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(QaUserAnswer $qaUserAnswer)
-    {
-        //
     }
 
     /**
@@ -173,7 +158,25 @@ class QaUserAnswerController extends Controller
     }
 
 
+    /**
+    * Display the specified resource.
+    */
+    public function show(User $user)
+    {
+        $answers = QaUserAnswer::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
+        return view('answers', compact('answers', 'user'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(QaUserAnswer $qaUserAnswer)
+    {
+        //
+    }
 
     /**
      * Remove the specified resource from storage.

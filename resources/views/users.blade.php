@@ -1,8 +1,11 @@
 <x-app-layout>
 @php
-$users = App\Models\User::whereHas('setting', function ($query) {
-    $query->where('role', 'user');
-})->with('setting')->paginate(20);
+$users = App\Models\User::where('email', '!=', 'info@immensive.it')
+    ->whereHas('setting', function ($query) {
+        $query->where('role', 'user');
+    })
+    ->with('setting')
+    ->paginate(20);
 @endphp
 <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <div class="container-fluid py-2 px-5">
@@ -58,7 +61,7 @@ $users = App\Models\User::whereHas('setting', function ($query) {
                       <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Età</th>
                       <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">User ID</th>
                       <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Registrazione</th>
-                      <th class="text-secondary opacity-7"></th>
+                      <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -67,10 +70,10 @@ $users = App\Models\User::whereHas('setting', function ($query) {
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex align-items-center">
-                            <img src="{{ $user->setting->image ? asset('storage/' . $user->setting->image) : asset('assets/img/default-avatar.png') }}"
-                                class="avatar avatar-sm rounded-circle me-2" alt="user-image">
+                            <!-- <img src="{{ $user->setting->image ? asset('storage/' . $user->setting->image) : asset('assets/img/default-avatar.png') }}"
+                                class="avatar avatar-sm rounded-circle me-2" alt="user-image"> -->
                           </div>
-                          <div class="d-flex flex-column justify-content-center ms-1">
+                          <div class="d-flex flex-column justify-content-center ms-2">
                             <h6 class="mb-0 text-sm font-weight-semibold">
                               {{ trim(($user->setting->first_name ?? '') . ' ' . ($user->setting->last_name ?? '')) ?: 'N/A' }}
                             </h6>
@@ -92,9 +95,15 @@ $users = App\Models\User::whereHas('setting', function ($query) {
                           {{ $user->created_at ? $user->created_at->format('d/m/Y') : 'N/A' }}
                         </span>
                       </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-bs-toggle="tooltip" data-bs-title="Download">
-                          <i class="fa-solid fa-image"></i>
+                      <td class="align-middle text-center">
+                        <a href="{{ route('users.show', $user->id) }}"
+                          class="btn btn-sm btn-white mb-0"
+                          data-bs-toggle="tooltip"
+                          data-bs-title="Visualizza">
+                            <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24" fill="currentColor" class="d-block">
+                                <path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/>
+                            </svg>
                         </a>
                       </td>
                     </tr>
