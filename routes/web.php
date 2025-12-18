@@ -24,4 +24,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::get('/exercise/{user}', [QaUserAnswerController::class, 'exercise'])->name('exercise.show');
     Route::get('/exercise/view/{id}', [QaUserAnswerController::class, 'viewExercise'])->name('exercise.view');
 
+    Route::get('users/{user}/download-csv', [QaUserAnswerController::class, 'downloadUserCsv'])->name('users.download.csv');
+
 });

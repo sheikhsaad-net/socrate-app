@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Exercise;
 use App\Models\ExerciseItem;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class QaUserAnswerController extends Controller
 {
@@ -227,4 +228,57 @@ class QaUserAnswerController extends Controller
         return view('exercise-item', compact('items', 'id'));
     }
 
+    public function downloadUserCsv(User $user)
+    {
+        $fileName = 'user_answers_' . $user->id . '.csv';
+
+        $headers = [
+            'Content-Type'        => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"$fileName\"",
+        ];
+
+        $callback = function() use ($user) {
+            $file = fopen('php://output', 'w');
+
+            // Header row
+            fputcsv($file, [
+                'User Name', 'Entry ID', 'Question ID', 'Answer ID',
+                'Survey Q1','Survey Q2','Survey Q3','Survey Q4','Survey Q5',
+                'Survey Q6','Survey Q7','Survey Q8','Survey Q9','Survey Q10',
+                'Survey Q11','Survey Q12','Survey Q13'
+            ]);
+
+            $qaEntries = QaUserAnswer::where('user_id', $user->id)->get();
+
+            foreach ($qaEntries as $entry) {
+                $surveyAnswers = SurveyAnswer::where('entry_id', $entry->id)->get();
+
+                foreach ($surveyAnswers as $answer) {
+                    fputcsv($file, [
+                        trim(($user->setting->first_name ?? '') . ' ' . ($user->setting->last_name ?? '')) ?: 'N/A',
+                        $entry->id,
+                        $answer->question_id,
+                        $answer->answer_id,
+                        $answer->survey_question_1,
+                        $answer->survey_question_2,
+                        $answer->survey_question_3,
+                        $answer->survey_question_4,
+                        $answer->survey_question_5,
+                        $answer->survey_question_6,
+                        $answer->survey_question_7,
+                        $answer->survey_question_8,
+                        $answer->survey_question_9,
+                        $answer->survey_question_10,
+                        $answer->survey_question_11,
+                        $answer->survey_question_12,
+                        $answer->survey_question_13
+                    ]);
+                }
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

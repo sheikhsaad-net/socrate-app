@@ -4,13 +4,16 @@
         <div class="row">
             <div class="col-12" style="padding:0;">
                 <div class="card border shadow-xs mb-4">
-                    <div class="card-header border-bottom pb-0">
-                        <h6 class="font-weight-semibold text-lg mb-0">
-                            Risposte utente
-                        </h6>
-                        <p class="text-sm mb-2">
-                            {{ $user->email }}
-                        </p>
+                    <div class="card-header border-bottom pb-0 d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="font-weight-semibold text-lg mb-0">Risposte utente</h6>
+                            <p class="text-sm mb-2">{{ $user->email }}</p>
+                        </div>
+                        <div>
+                            <a href="{{ route('users.download.csv', $user->id) }}" class="btn btn-sm btn-primary">
+                                Scarica CSV
+                            </a>
+                        </div>
                     </div>
 
                     <div class="card-body px-0 py-0">
@@ -18,10 +21,10 @@
                             <table class="table align-items-center mb-0">
                                 <thead class="bg-gray-100">
                                     <tr>
-                                        <th class="text-secondary text-xs font-weight-semibold opacity-7">Entry</th>
-                                        <th class="text-secondary text-xs font-weight-semibold opacity-7">Question ID</th>
-                                        <th class="text-secondary text-xs font-weight-semibold opacity-7">Answer ID</th>
-                                        <th class="text-center text-secondary text-xs font-weight-semibold opacity-7 col-2">Action</th>
+                                        <th class="text-secondary text-xs font-weight-semibold opacity-7">Voce</th>
+                                        <th class="text-secondary text-xs font-weight-semibold opacity-7">ID Domanda</th>
+                                        <th class="text-secondary text-xs font-weight-semibold opacity-7">ID Risposta</th>
+                                        <th class="text-center text-secondary text-xs font-weight-semibold opacity-7 col-2">Azione</th>
                                         <th class="text-center text-secondary text-xs font-weight-semibold opacity-7 col-2">Data</th>
                                     </tr>
                                 </thead>
