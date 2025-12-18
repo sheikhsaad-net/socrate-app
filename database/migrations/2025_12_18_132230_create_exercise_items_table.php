@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('exercise_id');
             $table->string('title');
             $table->string('rate');
+            $table->string('time');
             $table->timestamps();
 
             $table->foreign('exercise_id')->references('id')->on('exercises')->onDelete('cascade');

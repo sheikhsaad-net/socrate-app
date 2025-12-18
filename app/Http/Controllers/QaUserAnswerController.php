@@ -151,7 +151,7 @@ class QaUserAnswerController extends Controller
     public function createExercise(Request $request)
     {
         $exercise = Exercise::create([
-            'user_id' => $auth->user()->id,
+            'user_id' => $request->user()->id,
         ]);
 
         return response()->json([
@@ -161,11 +161,13 @@ class QaUserAnswerController extends Controller
 
     public function addExerciseItems(Request $request)
     {
+        
         $request->validate([
-            'exercise_id'    => 'required|exists:exercises,id',
-            'items'          => 'required|array|max:20',
-            'items.*.title'  => 'required|string|max:255',
-            'items.*.rate'   => 'required|string|max:255',
+            'exercise_id'      => 'required|exists:exercises,id',
+            'items'            => 'required|array|max:20',
+            'items.*.title'    => 'required|string|max:255',
+            'items.*.rate'     => 'required|string|max:255',
+            'items.*.time'     => 'required|string|max:255', 
         ]);
 
         foreach ($request->items as $item) {
@@ -173,6 +175,7 @@ class QaUserAnswerController extends Controller
                 'exercise_id' => $request->exercise_id,
                 'title'       => $item['title'],
                 'rate'        => $item['rate'],
+                'time'        => $item['time'], 
             ]);
         }
 
@@ -180,7 +183,6 @@ class QaUserAnswerController extends Controller
             'message' => 'Items added successfully',
         ], 201);
     }
-
 
     /**
     * Display the specified resource.
@@ -208,6 +210,14 @@ class QaUserAnswerController extends Controller
         return view('survey', compact('entry', 'user', 'question','questionSurvey', 'answerSurvey'));
     }
 
-   
-    
+    public function exercise(User $user)
+    {
+        $exercises = QaUserAnswer::where('user_id', $user->id)
+            ->whereNotNull('answer_id')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('exercise', compact('answers', 'user'));
+    }
+
 }
