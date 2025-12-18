@@ -16,5 +16,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
     Route::get('/users', function () {return view('users');})->name('users');
     Route::get('/users/{user}', [QaUserAnswerController::class, 'show'])->name('users.show');
+    Route::get('/survey/{entry}', [QaUserAnswerController::class, 'survey'])->name('survey.show');
 
 });

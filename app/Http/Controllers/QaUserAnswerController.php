@@ -91,6 +91,7 @@ class QaUserAnswerController extends Controller
             'survey_question_10' => 'nullable|string',
             'survey_question_11' => 'nullable|string',
             'survey_question_12' => 'nullable|string',
+            'survey_question_13' => 'nullable|string',
         ]);
 
         $qa = QaUserAnswer::findOrFail($req->entry_id);
@@ -111,6 +112,7 @@ class QaUserAnswerController extends Controller
             'survey_question_10' => $req->survey_question_10,
             'survey_question_11' => $req->survey_question_11,
             'survey_question_12' => $req->survey_question_12,
+            'survey_question_13' => $req->survey_question_13,
         ]);
 
         return response()->json(['status' => 'ok'], 200);
@@ -132,6 +134,7 @@ class QaUserAnswerController extends Controller
             'survey_question_10' => 'nullable|string',
             'survey_question_11' => 'nullable|string',
             'survey_question_12' => 'nullable|string',
+            'survey_question_13' => 'nullable|string',
         ]);
 
         $qa = QaUserAnswer::findOrFail($req->entry_id);
@@ -152,6 +155,7 @@ class QaUserAnswerController extends Controller
             'survey_question_10' => $req->survey_question_10,
             'survey_question_11' => $req->survey_question_11,
             'survey_question_12' => $req->survey_question_12,
+            'survey_question_13' => $req->survey_question_13,
         ]);
 
         return response()->json(['status' => 'ok'], 200);
@@ -169,6 +173,22 @@ class QaUserAnswerController extends Controller
 
         return view('answers', compact('answers', 'user'));
     }
+
+    public function survey($entryId)
+    {
+        $entry = QaUserAnswer::findOrFail($entryId);
+
+        $questionSurvey = SurveyAnswer::where('entry_id', $entry->id)
+            ->where('question_id', $entry->question_id)
+            ->first();
+
+        $answerSurvey = SurveyAnswer::where('entry_id', $entry->id)
+            ->where('answer_id', $entry->answer_id)
+            ->first();
+
+        return view('survey.show', compact('entry', 'questionSurvey', 'answerSurvey'));
+    }
+
 
     /**
      * Show the form for editing the specified resource.

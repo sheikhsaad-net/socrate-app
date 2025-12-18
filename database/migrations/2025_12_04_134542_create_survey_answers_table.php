@@ -30,6 +30,8 @@ return new class extends Migration
             $table->string('survey_question_10')->nullable();
             $table->string('survey_question_11')->nullable();
             $table->string('survey_question_12')->nullable();
+            $table->string('survey_question_13')->nullable();
+            
             $table->timestamps();
 
             $table->foreign('entry_id')

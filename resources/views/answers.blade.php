@@ -38,7 +38,7 @@
                                                 <span class="px-3">A: {{ $answer->answer_id ?? 'N/A' }}</span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <a href="#"
+                                                <a href="{{ route('survey.show', $answer->id) }}"
                                                 class="btn btn-sm btn-white mb-0"
                                                 data-bs-toggle="tooltip"
                                                 data-bs-title="Visualizza">

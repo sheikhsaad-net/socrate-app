@@ -22,6 +22,7 @@ class SurveyAnswer extends Model
         'survey_question_10',
         'survey_question_11',
         'survey_question_12',
+        'survey_question_13',
     ];
 
     public function qaEntry()
