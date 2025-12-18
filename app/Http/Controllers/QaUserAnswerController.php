@@ -281,4 +281,45 @@ class QaUserAnswerController extends Controller
 
         return response()->stream($callback, 200, $headers);
     }
+
+    public function downloadExerciseCsv(User $user)
+    {
+        $fileName = 'user_exercises_' . $user->id . '.csv';
+
+        $headers = [
+            'Content-Type'        => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"$fileName\"",
+        ];
+
+        $callback = function() use ($user) {
+            $file = fopen('php://output', 'w');
+
+            // Header row in Italian
+            fputcsv($file, ['Nome Utente', 'Exercise ID', 'Titolo', 'Rate', 'Tempo (sec)', 'Data Creazione']);
+
+            // Fetch all exercises for the user
+            $exercises = Exercise::where('user_id', $user->id)->get();
+
+            foreach ($exercises as $exercise) {
+                // Fetch items for this exercise like SurveyAnswer example
+                $items = ExerciseItem::where('exercise_id', $exercise->id)->get();
+
+                foreach ($items as $item) {
+                    fputcsv($file, [
+                        trim(($user->setting->first_name ?? '') . ' ' . ($user->setting->last_name ?? '')) ?: 'N/A',
+                        $exercise->id,
+                        $item->title,
+                        $item->rate,
+                        $item->time,
+                        $item->created_at ? $item->created_at->format('d/m/Y H:i') : 'N/A'
+                    ]);
+                }
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
 }

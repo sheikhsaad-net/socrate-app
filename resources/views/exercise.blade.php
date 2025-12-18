@@ -4,10 +4,15 @@
         <div class="row">
             <div class="col-12" style="padding: 0;">
                 <div class="card border shadow-xs mb-4">
-                    <div class="card-header border-bottom pb-0">
-                        <h6 class="font-weight-semibold text-lg mb-3">
-                            Esercizi di {{$id}}
+                    <div class="card-header border-bottom pb-0 d-flex justify-content-between align-items-center">
+                        <h6 class="ps-3 mb-2">
+                            Esercizi di {{ trim(($user->setting->first_name ?? '') . ' ' . ($user->setting->last_name ?? '')) ?: 'N/A' }}
                         </h6>
+                        <div>
+                            <a href="{{ route('users.download.exercises', $user->id) }}" class="btn btn-sm btn-primary">
+                                Scarica CSV
+                            </a>
+                        </div>
                     </div>
                     <div class="card-body px-0 py-0">
                         <div class="table-responsive p-3">
