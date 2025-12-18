@@ -161,7 +161,6 @@ class QaUserAnswerController extends Controller
         return response()->json(['status' => 'ok'], 200);
     }
 
-
     /**
     * Display the specified resource.
     */
@@ -176,17 +175,17 @@ class QaUserAnswerController extends Controller
 
     public function survey($entryId)
     {
+        
         $entry = QaUserAnswer::findOrFail($entryId);
+        $user = User::findOrFail($entry->user_id);
 
-        $questionSurvey = SurveyAnswer::where('entry_id', $entry->id)
-            ->where('question_id', $entry->question_id)
-            ->first();
+        $question = SurveyQuestion::all();
 
-        $answerSurvey = SurveyAnswer::where('entry_id', $entry->id)
-            ->where('answer_id', $entry->answer_id)
-            ->first();
+        $questionSurvey = SurveyAnswer::where('entry_id', $entry->id)->where('question_id', $entry->question_id)->first();
+        $answerSurvey = SurveyAnswer::where('entry_id', $entry->id)->where('answer_id', $entry->answer_id)->first();
 
-        return view('survey.show', compact('entry', 'questionSurvey', 'answerSurvey'));
+
+        return view('survey', compact('entry', 'user', 'question','questionSurvey', 'answerSurvey'));
     }
 
 
