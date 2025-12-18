@@ -224,7 +224,7 @@ class QaUserAnswerController extends Controller
     {
         $items = ExerciseItem::where('exercise_id', $id)->get();
 
-        return view('exercise-item', compact('items'));
+        return view('exercise-item', compact('items', 'id'));
     }
 
 }

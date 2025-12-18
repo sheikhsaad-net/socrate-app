@@ -6,7 +6,7 @@
                 <div class="card border shadow-xs mb-4">
                     <div class="card-header border-bottom pb-0">
                         <h6 class="font-weight-semibold text-lg mb-3">
-                            Esercizi di {{ trim(($user->setting->first_name ?? '') . ' ' . ($user->setting->last_name ?? '')) ?: 'N/A' }}
+                            Esercizi di {{$id}}
                         </h6>
                     </div>
                     <div class="card-body px-0 py-0">
