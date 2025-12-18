@@ -19,7 +19,3 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/exercise', [QaUserAnswerController::class, 'createExercise']);
     Route::post('/exercise/item', [QaUserAnswerController::class, 'addExerciseItems']);
 });
-
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');

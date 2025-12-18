@@ -212,12 +212,19 @@ class QaUserAnswerController extends Controller
 
     public function exercise(User $user)
     {
-        $exercises = QaUserAnswer::where('user_id', $user->id)
-            ->whereNotNull('answer_id')
+        
+        $exercises = Exercise::where('user_id', $user->id)
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('exercise', compact('answers', 'user'));
+        return view('exercise', compact('exercises', 'user'));
+    }
+
+    public function viewExercise($id)
+    {
+        $items = ExerciseItem::where('exercise_id', $id)->get();
+
+        return view('exercise-item', compact('items'));
     }
 
 }

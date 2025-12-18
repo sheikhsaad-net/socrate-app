@@ -99,7 +99,7 @@ $users = App\Models\User::where('email', '!=', 'info@immensive.it')
                         <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-white mb-0" data-bs-toggle="tooltip" data-bs-title="Visualizza">
                             Questionario
                         </a>
-                        <a href="{{ route('exercise.view', $user->id) }}" class="btn btn-sm btn-white mb-0" data-bs-toggle="tooltip" data-bs-title="Visualizza">
+                        <a href="{{ route('exercise.show', $user->id) }}" class="btn btn-sm btn-white mb-0" data-bs-toggle="tooltip" data-bs-title="Visualizza">
                             Esercizio
                         </a>
                       </td>
