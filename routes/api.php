@@ -16,7 +16,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/survey/question', [QaUserAnswerController::class, 'getQuestionSurway']);
     Route::post('/survey/question', [QaUserAnswerController::class, 'storeQuestionSurway']);
     Route::post('/survey/answer', [QaUserAnswerController::class, 'storeAnswerSurway']);
-
+    Route::post('/exercise', [QaUserAnswerController::class, 'createExercise']);
+    Route::post('/exercise/item', [QaUserAnswerController::class, 'addExerciseItems']);
 });
 
 // Route::get('/user', function (Request $request) {

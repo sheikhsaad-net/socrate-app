@@ -61,7 +61,7 @@ $users = App\Models\User::where('email', '!=', 'info@immensive.it')
                       <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Età</th>
                       <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">User ID</th>
                       <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Registrazione</th>
-                      <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Action</th>
+                      <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Azione</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -96,14 +96,11 @@ $users = App\Models\User::where('email', '!=', 'info@immensive.it')
                         </span>
                       </td>
                       <td class="align-middle text-center">
-                        <a href="{{ route('users.show', $user->id) }}"
-                          class="btn btn-sm btn-white mb-0"
-                          data-bs-toggle="tooltip"
-                          data-bs-title="Visualizza">
-                            <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24" fill="currentColor" class="d-block">
-                                <path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/>
-                            </svg>
+                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-white mb-0" data-bs-toggle="tooltip" data-bs-title="Visualizza">
+                            Questionario
+                        </a>
+                        <a href="{{ route('exercise.view', $user->id) }}" class="btn btn-sm btn-white mb-0" data-bs-toggle="tooltip" data-bs-title="Visualizza">
+                            Esercizio
                         </a>
                       </td>
                     </tr>

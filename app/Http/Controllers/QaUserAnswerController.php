@@ -6,25 +6,12 @@ use App\Models\QaUserAnswer;
 use App\Models\SurveyAnswer;
 use App\Models\SurveyQuestion;
 use App\Models\User;
+use App\Models\Exercise;
+use App\Models\ExerciseItem;
 use Illuminate\Http\Request;
 
 class QaUserAnswerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -161,6 +148,40 @@ class QaUserAnswerController extends Controller
         return response()->json(['status' => 'ok'], 200);
     }
 
+    public function createExercise(Request $request)
+    {
+        $exercise = Exercise::create([
+            'user_id' => $auth->user()->id,
+        ]);
+
+        return response()->json([
+            'exercise_id' => $exercise->id,
+        ], 201);
+    }
+
+    public function addExerciseItems(Request $request)
+    {
+        $request->validate([
+            'exercise_id'    => 'required|exists:exercises,id',
+            'items'          => 'required|array|max:20',
+            'items.*.title'  => 'required|string|max:255',
+            'items.*.rate'   => 'required|string|max:255',
+        ]);
+
+        foreach ($request->items as $item) {
+            ExerciseItem::create([
+                'exercise_id' => $request->exercise_id,
+                'title'       => $item['title'],
+                'rate'        => $item['rate'],
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Items added successfully',
+        ], 201);
+    }
+
+
     /**
     * Display the specified resource.
     */
@@ -181,27 +202,12 @@ class QaUserAnswerController extends Controller
 
         $question = SurveyQuestion::all();
 
-        $questionSurvey = SurveyAnswer::where('entry_id', $entry->id)->where('question_id', $entry->question_id)->first();
-        $answerSurvey = SurveyAnswer::where('entry_id', $entry->id)->where('answer_id', $entry->answer_id)->first();
-
+        $questionSurvey = SurveyAnswer::where('entry_id', $entry->id)->whereNotNull('question_id')->where('question_id', $entry->question_id)->first();
+        $answerSurvey = SurveyAnswer::where('entry_id', $entry->id)->whereNotNull('answer_id')->where('answer_id', $entry->answer_id)->first();
 
         return view('survey', compact('entry', 'user', 'question','questionSurvey', 'answerSurvey'));
     }
 
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(QaUserAnswer $qaUserAnswer)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(QaUserAnswer $qaUserAnswer)
-    {
-        //
-    }
+   
+    
 }
