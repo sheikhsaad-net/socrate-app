@@ -33,6 +33,18 @@
 
   <!-- Styles -->
   @livewireStyles
+
+  <style>
+    .alert {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}button.btn-close {
+    color: #333;
+    font-weight: 700;
+    top: -5px !important;
+}
+  </style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -60,6 +72,20 @@
         @stack('modals')
 
         @livewireScripts
+
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Chiudi">x</button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Chiudi">x</button>
+            </div>
+        @endif
   
   <!--   Core JS Files   -->
   <script src="{{ url('/assets/js/core/popper.min.js') }}"></script>

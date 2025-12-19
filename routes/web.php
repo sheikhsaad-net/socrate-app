@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QaUserAnswerController;
+use App\Http\Controllers\SettingController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,6 +18,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::get('/users', function () {return view('users');})->name('users');
     Route::get('/privacypolicy', function () {return view('policy');})->name('privacypolicy');
     Route::get('/questions', function () {return view('questions');})->name('questions');
+
+    Route::delete('/users/{user}', [SettingController::class, 'destroy'])->name('users.destroy');
 
     Route::get('/users/{user}', [QaUserAnswerController::class, 'show'])->name('users.show');
     Route::get('/survey/{entry}', [QaUserAnswerController::class, 'survey'])->name('survey.show');

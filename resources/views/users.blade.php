@@ -102,6 +102,19 @@ $users = App\Models\User::where('email', '!=', 'info@immensive.it')
                         <a href="{{ route('exercise.show', $user->id) }}" class="btn btn-sm btn-white mb-0" data-bs-toggle="tooltip" data-bs-title="Visualizza">
                             Esercizio
                         </a>
+                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline" onsubmit="return confirmDelete();">
+                              @csrf
+                              @method('DELETE')
+                              <button type="submit" class="btn btn-sm btn-danger mb-0" data-bs-toggle="tooltip" data-bs-title="Elimina">
+                                  Elimina
+                              </button>
+                          </form>
+
+                          <script>
+                          function confirmDelete() {
+                              return confirm("Sei sicuro di voler eliminare questo utente e tutti i suoi dati? Questa azione è irreversibile.");
+                          }
+                          </script>
                       </td>
                     </tr>
                     @endforeach
