@@ -7,6 +7,7 @@ use App\Models\SurveyAnswer;
 use App\Models\SurveyQuestion;
 use App\Models\User;
 use App\Models\Exercise;
+use App\Models\Track;
 use App\Models\ExerciseItem;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -320,6 +321,36 @@ class QaUserAnswerController extends Controller
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+    public function storeTrackListen(Request $request, $question_id)
+    {
+
+        // Validate incoming JSON array
+        $request->validate([
+            'items'                 => 'required|array|max:20',
+            'items.*.track_number' => 'required|integer',
+            'items.*.exercise_number'=> 'required|integer',
+            'items.*.listen_count'  => 'required|integer|min:0',
+        ]);
+
+        $created = [];
+
+        foreach ($request->items as $item) {
+            $record = Track::create([
+                'user_id'         => $request->user()->id,
+                'question_id'     => $question_id,
+                'track_number'   => $item['track_number'],
+                'exercise_number' => $item['exercise_number'],
+                'listen_count'    => $item['listen_count'],
+            ]);
+            $created[] = $record;
+        }
+
+        // Return JSON response
+        return response()->json([
+            'message' => 'Track listen saved successfully',
+        ], 201);
     }
 
 }

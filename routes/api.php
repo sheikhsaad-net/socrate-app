@@ -18,4 +18,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/survey/answer', [QaUserAnswerController::class, 'storeAnswerSurway']);
     Route::post('/exercise', [QaUserAnswerController::class, 'createExercise']);
     Route::post('/exercise/item', [QaUserAnswerController::class, 'addExerciseItems']);
+
+    Route::post('/tracks/{question_id}', [QaUserAnswerController::class, 'storeTrackListen']);
 });
