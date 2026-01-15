@@ -56,7 +56,7 @@
                                                 <a href="{{ route('tracks.show', ['user' => $user->id, 'question' => $answer->id]) }}"
                                                 class="btn btn-sm btn-white mb-0"
                                                 data-bs-toggle="tooltip"
-                                                data-bs-title="Ascolta Traccia">
+                                                data-bs-title="Aprire">
                                                     <!-- Headphone SVG icon -->
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                                         class="bi bi-headphones d-block" viewBox="0 0 16 16">
