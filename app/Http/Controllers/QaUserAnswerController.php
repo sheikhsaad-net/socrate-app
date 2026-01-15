@@ -353,4 +353,14 @@ class QaUserAnswerController extends Controller
         ], 201);
     }
 
+    
+    public function tracks($user, $question)
+    {
+
+        $tracks = Track::where('user_id', $user)->where('question_id', $question)->get();
+
+        // Return view with track details
+        return view('tracks', compact('tracks'));
+    }
+
 }

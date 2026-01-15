@@ -14,7 +14,7 @@
                             <table class="table align-items-center mb-0">
                                 <thead class="bg-gray-100">
                                     <tr>
-                                        <th class="text-secondary text-xs font-weight-semibold opacity-7">Titolo</th>
+                                        <th class="text-secondary text-xs font-weight-semibold opacity-7">Parola</th>
                                         <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center">Rate</th>
                                         <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center">Time (sec)</th>
                                     </tr>

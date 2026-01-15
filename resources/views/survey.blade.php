@@ -19,8 +19,8 @@
                                 <thead class="bg-gray-100">
                                     <tr>
                                         <th class="text-secondary text-xs font-weight-semibold opacity-7">Question ({{ $question->count() }})</th>
-                                        <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center">Question Survey (ID-{{$entry->question_id}})</th>
-                                        <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center">Answer Survey (ID-{{$entry->answer_id}})</th>
+                                        <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center">Pre Survey (ID-{{$entry->question_id}})</th>
+                                        <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center">Post Survey (ID-{{$entry->answer_id}})</th>
                                     </tr>
                                 </thead>
                                 <tbody>

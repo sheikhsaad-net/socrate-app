@@ -23,6 +23,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     Route::get('/users/{user}', [QaUserAnswerController::class, 'show'])->name('users.show');
     Route::get('/survey/{entry}', [QaUserAnswerController::class, 'survey'])->name('survey.show');
+    Route::get('/tracks/{user}/{question}', [QaUserAnswerController::class, 'tracks'])->name('tracks.show');
 
     Route::get('/exercise/{user}', [QaUserAnswerController::class, 'exercise'])->name('exercise.show');
     Route::get('/exercise/view/{id}', [QaUserAnswerController::class, 'viewExercise'])->name('exercise.view');
@@ -30,4 +31,5 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::get('users/{user}/download-csv', [QaUserAnswerController::class, 'downloadUserCsv'])->name('users.download.csv');
     Route::get('users/{user}/download-exercises', [QaUserAnswerController::class, 'downloadExerciseCsv'])->name('users.download.exercises');
 
+    
 });

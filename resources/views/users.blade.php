@@ -97,10 +97,10 @@ $users = App\Models\User::where('email', '!=', 'info@immensive.it')
                       </td>
                       <td class="align-middle text-center">
                         <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-white mb-0" data-bs-toggle="tooltip" data-bs-title="Visualizza">
-                            Questionario
+                            Dialogo Critico
                         </a>
                         <a href="{{ route('exercise.show', $user->id) }}" class="btn btn-sm btn-white mb-0" data-bs-toggle="tooltip" data-bs-title="Visualizza">
-                            Esercizio
+                            Approccio / Evitamento
                         </a>
                         <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline" onsubmit="return confirmDelete();">
                               @csrf
